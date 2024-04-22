@@ -7,12 +7,12 @@ namespace WeRunApp.Entities
     public class Route
     {
         public int RouteId { get; set; }
-        public string RouteName { get; set; }
-        public string StartPoint { get; set; }
-        public string EndPoint { get; set; }
-        public double TotalDistance { get; set; } //distance in meters, can convert with constants
-        public string MapData { get; set; }
-        public double ElevationGain { get; set; }
+        public string? RouteName { get; set; }
+        public string? StartPoint { get; set; }
+        public string? EndPoint { get; set; }
+        public double? TotalDistance { get; set; } //distance in meters, can convert with constants
+        public string? MapData { get; set; }
+        public double? ElevationGain { get; set; }
 
         public double GetDistanceInKilometers(double DistanceInMeters)
         {

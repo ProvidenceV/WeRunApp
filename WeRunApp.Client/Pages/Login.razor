@@ -1,45 +1,34 @@
 ﻿@page "/login"
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Components.Authorization
-@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Components
+@inject IDbContextFactory<AppDBContext> DbContextFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Login</PageTitle>
-
 <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
-<h1>Login</h1>
-<div>
-    <span>Username</span>
-   <!--- <span> or email</span> -->
-    <InputText @bind-Value="loginModel.Email" />
-   <span>Password</span>
-    <InputText @bind-Value="loginModel.Password" />
-</div>
-
-    <button type="submit">Log in</button>
+    <InputText @bind-Value="loginModel.Username" />
+    <InputText @bind-Value="loginModel.Password" type="password" />
+    <button type="submit">Login</button>
 </EditForm>
+
 
 @code {
     private LoginModel loginModel = new LoginModel();
 
     private async Task HandleLogin()
     {
-        var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);
-        if (result.Succeeded)
+        using var context = DbContextFactory.CreateDbContext();
+        var user = await context.Users
+                    .FirstOrDefaultAsync(u => u.Username == loginModel.Username &&
+                                              u.Password == loginModel.Password);
+        if (user != null)
         {
-            NavigationManager.NavigateTo("/HomeLogIn");
+            // Implement session management or token generation
+            // Redirect to home page
+            NavigationManager.NavigateTo("/");
         }
         else
         {
-            // Handle failed login
-            
+            // Handle login failure
+            Console.WriteLine("Invalid username or password");
         }
     }
-
-    public class LoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
 }
-

@@ -6,13 +6,13 @@ namespace WeRunApp.Entities
     [Table("RunHistory")]
     public class RunHistory
     {
-        public int HistoryId { get; set; }
-        public int UserId { get; set; }
-        public int TotalRuns { get; set; }
-        public double TotalDistance { get; set; } //distance in meters, can convert with constants
-        public int TotalCalories { get; set; }
-        public TimeSpan BestTime { get; set; }
-        public double BestDistance { get; set; }
+        public int? HistoryId { get; set; }
+        public int? UserId { get; set; }
+        public int? TotalRuns { get; set; }
+        public double? TotalDistance { get; set; } //distance in meters, can convert with constants
+        public int? TotalCalories { get; set; }
+        public TimeSpan? BestTime { get; set; }
+        public double? BestDistance { get; set; }
 
         //functions
         public double GetDistanceInKilometers(double DistanceInMeters)

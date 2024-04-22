@@ -7,10 +7,10 @@ namespace WeRunApp.Entities
     {
         public int GoalId { get; set; }
         public int UserId { get; set; }
-        public string GoalType { get; set; }
-        public double GoalValue { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string? GoalType { get; set; }
+        public double? GoalValue { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool IsAchieved { get; set; }
 
         // relationship

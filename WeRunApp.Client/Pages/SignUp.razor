@@ -1,65 +1,45 @@
 ﻿@page "/signup"
-@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
-@inject NavigationManager NavigationManager
+@inject IDContextFactory<AppDBContext> DbContextFactory
+
 
 <PageTitle>Sign Up</PageTitle>
 
 <h1>Sign Up</h1>
 
 <div>
-    <EditForm Model="@newUser" OnValidSubmit="SignUp">
-    Enter your information below:
+    <EditForm Model="@user" OnValidSubmit="SignUp">
+        Enter your information below:
 
-        Username:  <InputText @bind-Value="newUser.Username" />
+        Username:  <InputText @bind-Value="user.Username" />
 
-        First Name:  <InputText @bind-Value="newUser.FirstName" />
+        First Name:  <InputText @bind-Value="user.FirstName" />
 
-        Last Name:  <InputText @bind-Value="newUser.LastName" />
+        Last Name:  <InputText @bind-Value="user.LastName" />
 
-        Email Address: <InputText @bind-Value="newUser.Email" />
+        Email Address: <InputText @bind-Value="user.Email" />
 
-        New Password: <InputText @bind-Value="newUser.Password" />
+        New Password: <InputText @bind-Value="user.Password" />
 
-        Gender: <InputText @bind-Value="newUser.Gender" />
+        Gender: <InputText @bind-Value="user.Gender" />
 
-        Date Of Birth:  <InputText @bind-Value="newUser.DateOfBirth" />
+        Date Of Birth:  <InputText @bind-Value="user.DateOfBirth" />
 
 
         <button type="submit">Register</button>
     </EditForm>
 </div>
-<FluentButton>Continue</FluentButton>
+
 
 @code {
-    private newUser newUser = new NewUser();
+    private User user = new User();
 
     private async Task SignUp()
     {
-        var user = new User { UserName = registerModel.Email, Email = registerModel.Email };
-        var result = await UserManager.CreateAsync(user, registerModel.Password);
-        if (result.Succeeded)
-        {
-            // Optionally sign the user in or confirm email
-            NavigationManager.NavigateTo("/HomeLogin");
-        }
-        else
-        {
-            // Handle sign up failure
-        }
-    }
+        using var context = DbContextFactory.CreateDbContext();
 
-    public class NewUser
-    {
-        public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Gender { get; set; }
-        public string DateOfBirth { get; set; }
-
-        public DateTime DateJoined
-
+        context.Users.Add(user);
+        await context.SaveChangesAsync();
+        // Redirect to login
+        NavigationManager.NavigateTo("/login");
     }
 }
