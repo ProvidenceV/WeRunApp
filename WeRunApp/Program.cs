@@ -1,6 +1,9 @@
 using WeRunApp.Client.Pages;
 using Microsoft.FluentUI.AspNetCore.Components;
 using WeRunApp.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using WeRunApp.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddFluentUIComponents();
+
+
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+    options.UseSqlite("Data Source=mydatabase.db"));
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+ //   options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -31,5 +43,10 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(WeRunApp.Client._Imports).Assembly);
+
+
+//app.UseRouting();
+
+//app.MapBlazorHub();
 
 app.Run();

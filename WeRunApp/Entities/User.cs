@@ -15,7 +15,7 @@ namespace WeRunApp.Entities
         public string? LastName { get; set; }
         public DateTime JoinDate { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
     }
    

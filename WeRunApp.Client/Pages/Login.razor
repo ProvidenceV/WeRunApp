@@ -1,5 +1,8 @@
 ﻿@page "/login"
 @using Microsoft.AspNetCore.Components
+@using Microsoft.EntityFrameworkCore;
+@using WeRunApp
+
 @inject IDbContextFactory<AppDBContext> DbContextFactory
 @inject NavigationManager NavigationManager
 
@@ -7,28 +10,30 @@
     <InputText @bind-Value="loginModel.Username" />
     <InputText @bind-Value="loginModel.Password" type="password" />
     <button type="submit">Login</button>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="text-danger">@errorMessage</p>
+    }
 </EditForm>
 
 
 @code {
     private LoginModel loginModel = new LoginModel();
+    private string? errorMessage;
 
     private async Task HandleLogin()
     {
         using var context = DbContextFactory.CreateDbContext();
         var user = await context.Users
                     .FirstOrDefaultAsync(u => u.Username == loginModel.Username &&
-                                              u.Password == loginModel.Password);
+                                              u.Password == loginModel.Password); // Consider hashing
         if (user != null)
         {
-            // Implement session management or token generation
-            // Redirect to home page
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/HomeLogin");
         }
         else
         {
-            // Handle login failure
-            Console.WriteLine("Invalid username or password");
+            errorMessage = "Invalid username or password";
         }
     }
 }

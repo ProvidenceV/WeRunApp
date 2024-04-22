@@ -6,9 +6,9 @@ namespace WeRunApp.Database
 {
     public class AppDbContext : DbContext
     {
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base()
         {
-
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Goal> Goals { get; set; }
@@ -20,7 +20,6 @@ namespace WeRunApp.Database
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>();
-             
 
             modelBuilder.Entity<Goal>();
 
@@ -38,5 +37,7 @@ namespace WeRunApp.Database
         {
             optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
         }
+
+
     }
 }
