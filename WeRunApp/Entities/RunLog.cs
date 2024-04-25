@@ -7,8 +7,6 @@ namespace WeRunApp.Entities
     public class RunLog
     {
         public int RunId { get; set; }
-        public int UserId { get; set; }
-        public int? RouteId { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public TimeSpan? Duration { get; set; }
@@ -28,6 +26,9 @@ namespace WeRunApp.Entities
 
         // relationship
         public User User { get; set; }
+        public uint? UserId { get; set; }
+
         public Route Route { get; set; }
+        public uint? RouteId { get; set; }
     }
 }

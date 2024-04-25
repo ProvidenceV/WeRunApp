@@ -7,7 +7,6 @@ namespace WeRunApp.Entities
     public class RunHistory
     {
         public int? HistoryId { get; set; }
-        public int? UserId { get; set; }
         public int? TotalRuns { get; set; }
         public double? TotalDistance { get; set; } //distance in meters, can convert with constants
         public int? TotalCalories { get; set; }
@@ -27,5 +26,11 @@ namespace WeRunApp.Entities
 
         //relationship
         public User User { get; set; }
+        public uint UserId { get; set; }
+
+        public Route Route { get; set; }
+        public uint RouteId { get; set; }
+
+        
     }
 }

@@ -6,7 +6,7 @@ namespace WeRunApp.Entities
     [Table("Routes")]
     public class Route
     {
-        public int RouteId { get; set; }
+        public uint RouteId { get; set; }
         public string? RouteName { get; set; }
         public string? StartPoint { get; set; }
         public string? EndPoint { get; set; }
@@ -23,5 +23,8 @@ namespace WeRunApp.Entities
         {
             return DistanceConverter.ConvertMetersToMiles(DistanceInMeters);
         }
+        // relationship
+        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

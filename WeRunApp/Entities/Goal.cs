@@ -6,7 +6,6 @@ namespace WeRunApp.Entities
     public class Goal
     {
         public int GoalId { get; set; }
-        public int UserId { get; set; }
         public string? GoalType { get; set; }
         public double? GoalValue { get; set; }
         public DateTime? StartDate { get; set; }
@@ -15,5 +14,7 @@ namespace WeRunApp.Entities
 
         // relationship
         public User User { get; set; }
+        public int UserId { get; set; }
+
     }
 }

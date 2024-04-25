@@ -29,15 +29,32 @@ namespace WeRunApp.Database
 
             modelBuilder.Entity<Route>();
 
+            // One-to-Many: User to Goals
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Goals)
+                .WithOne(g => g.User)
+                .HasForeignKey(g => g.UserId);
 
+            // One-to-Many: User to Goals
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.RunHistory)
+                .WithOne(rh => rh.User)
+                .HasForeignKey(rh => rh.UserId);
 
+            // One-to-Many: User to Routes
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Routes)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserId);
+
+            base.OnModelCreating(modelBuilder);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
-        }
+    }
+   // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+  //      {
+  //          optionsBuilder.UseSqlite("Data Source=WeRunApp.db");
+  //      }
 
 
     }
-}
+
